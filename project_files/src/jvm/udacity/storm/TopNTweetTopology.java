@@ -38,8 +38,9 @@ class TopNTweetTopology
 
     // attach the parse tweet bolt using shuffle grouping
     builder.setBolt("parse-tweet-bolt", new ParseTweetBolt(), 10).shuffleGrouping("tweet-spout");
-    builder.setBolt("infoBolt", new InfoBolt(), 10).fieldsGrouping("parse-tweet-bolt", new Fields("county_id"));
-    builder.setBolt("top-words", new TopWords(), 10).fieldsGrouping("infoBolt", new Fields("county_id"));
+  //  builder.setBolt("infoBolt", new InfoBolt(), 10).fieldsGrouping("parse-tweet-bolt", new Fields("county_id"));
+  //  builder.setBolt("top-words", new TopWords(), 10).fieldsGrouping("infoBolt", new Fields("county_id"));
+      builder.setBolt("top-words", new TopWords(), 10).fieldsGrouping("parse-tweet-bolt", new Fields("county_id"));
     builder.setBolt("report-bolt", new ReportBolt(), 1).globalGrouping("top-words");
 
     // attach rolling count bolt using fields grouping - parallelism of 5

@@ -87,8 +87,8 @@ public class TopWords extends BaseRichBolt
 		String dO = tuple.getStringByField("object");
 		String county = (String) tuple.getStringByField("county_id");
 		String url = tuple.getStringByField("url");
-		String matchedEmoticon = tuple.getStringByField("matchedEmoticon");
-		int matchedEmoticonScore = tuple.getIntegerByField("matchedEmoticonScore");
+		String matchedEmoticon = "";
+		int matchedEmoticonScore = 0;
 		int sentiment = tuple.getIntegerByField("sentiment");
 		String sentimentKey = county + " " + String.valueOf(sentiment);
 		double reportSentiment = 0.5;
