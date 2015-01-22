@@ -30,6 +30,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.regex.Pattern;
+import java.util.List;
+import java.util.Arrays;
+
 
 /**
  * A spout that uses Twitter streaming API for continuously
@@ -169,6 +172,9 @@ public class TweetSpout extends BaseRichSpout
   @Override
   public void nextTuple()
   {
+    String[] hitWords = {"government", "US", "system", "politics", "politicians",
+    "policy", "policies", "CIA", "NSA"};
+
     // try to pick a tweet from the buffer
     String ret = queue.poll();
     String geoInfo;
@@ -190,7 +196,18 @@ public class TweetSpout extends BaseRichSpout
         System.out.print("\t DEBUG SPOUT: BEFORE SENTIMENT \n");
         int sentiment = SentimentAnalyzer.findSentiment(originalTweet)-2;
         System.out.print("\t DEBUG SPOUT: AFTER SENTIMENT (" + String.valueOf(sentiment) + ") for \t" + originalTweet + "\n");
-        collector.emit(new Values(ret, sentiment));
+        String delims = "[ .,?!]+";
+	String[] tokens = originalTweet.split(delims);
+        // for each token/word, emit it
+      	int n = tokens.length;
+        for (int i = 0; i < n; i++) {
+//	    	if(!Arrays.asList(skipWords).contains(tokens[i])){
+			if(Arrays.asList(hitWords).contains(tokens[i]))
+				collector.emit(new Values(ret, sentiment));
+//	   	     }
+	    }
+	
+//        collector.emit(new Values(ret, sentiment));
     }
   }
 
