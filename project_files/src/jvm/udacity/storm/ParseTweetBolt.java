@@ -78,7 +78,7 @@ public class ParseTweetBolt extends BaseRichBolt
     // provide the delimiters for splitting the tweet
     String delims = "[ .,?!]+";
 
-    String [] posTweet = PartOfSpeechTagger(tweet);
+    String [] posTweet = {"", "", ""};
     //String [] posTweet = new String[]{"i" ,"got" ,"ebola"};
     if(posTweet != null)
     {    
@@ -96,55 +96,8 @@ public class ParseTweetBolt extends BaseRichBolt
 	    collector.emit(new Values(tweet, result.toString(), posTweet[0], posTweet[1], posTweet[2], county_id, url, sentiment));
 
 		
-    } 
-
-    
-  }
-
-  
-  public String [] PartOfSpeechTagger(String sentence)
-  {
-	  String [] result = new String[3];
-	  result[0] = "";
-	  result[1] = "";
-	  result[2] = "";
-	  /*String tagged = tagger.tagString(sentence);
-	  
-	  System.out.println("\tParseTweetBolt\tDEBUG: tagged sentence is " + tagged);
-	  
-	  int seen = 0;
-	  if(tagged.contains("_NN "))
-	  {
-		  result[0] = tagged.substring(0, tagged.indexOf("_NN"));
-		  result[0] = result[0].substring(Math.max(0,result[0].lastIndexOf(" ")));
-		  System.out.println("\tParseTweetBolt\tDEBUG: subject is " + result[0]);
-		  seen++;
-	  }
-	  if(tagged.contains("_VB "))
-	  {
-		  result[1] = tagged.substring(0, tagged.indexOf("_VB"));
-		  result[1] = result[1].substring(Math.max(0,result[1].lastIndexOf(" ")));
-		  System.out.println("\tParseTweetBolt\tDEBUG: verb is " + result[1]);
-		  seen++;
-	  }
-	  if(tagged.contains("_NNP "))
-	  {
-		  result[2] = tagged.substring(0, tagged.indexOf("_NNP"));
-		  result[2] = result[2].substring(Math.max(0,result[2].lastIndexOf(" ")));
-		  System.out.println("\tParseTweetBolt\tDEBUG: verb is " + result[2]);
-		  seen++;
-	  }
-	  if(seen > 1 )
-		  return result;
-	  else
-		  return null;
-	  */
-	  
-	  
-	  return result;
-	  
-  }
-  
+    }
+  }  
   @Override
   public void declareOutputFields(OutputFieldsDeclarer declarer)
   {
