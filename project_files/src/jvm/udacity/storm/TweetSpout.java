@@ -172,8 +172,14 @@ public class TweetSpout extends BaseRichSpout
   @Override
   public void nextTuple()
   {
-    String[] hitWords = {"government", "US", "system", "politics", "politicians",
-    "policy", "policies", "CIA", "NSA"};
+    String[] hitWords = {"Assassination", "Attack", "Domestic security", "Drill", "Exercise", "Cops", "Law enforcement", "Authorities", 
+			"Disaster assistance", "Disaster management", "DNDO", "National preparedness", "Mitigation", "Prevention","Response",
+			"Recovery", "Dirty bomb", "Domestic nuclear detection", "Emergency detection", "Emergency response", 
+			"First responder", "Homeland security", "MDA", "Militia", "initiative", "Shooting", "Shots fired","Evacuation",
+			"Deaths", "Hostage", "Explosion", "Explosive", "Police", "DMAT", "Organized crime", "Gangs", "National Security",
+			"state of emergency", "Security", "Breach", "Threat", "Standoff", "SWAT", "Screening", "Lockdown", "Bomb",
+			"Crash", "Looting", "Riot", "Emergency landing", "Pipe bomb", "Incident", "Facility"
+			 };
 
     // try to pick a tweet from the buffer
     String ret = queue.poll();
