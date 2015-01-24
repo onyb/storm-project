@@ -29,7 +29,6 @@ import udacity.storm.tools.SentimentAnalyzer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.regex.Pattern;
 import java.util.List;
 import java.util.Arrays;
 
@@ -54,9 +53,6 @@ public class TweetSpout extends BaseRichSpout
     // Shared queue for getting buffering tweets received
     LinkedBlockingQueue<String> queue = null;
   
-    Pattern moodPattern = Pattern.compile("love|hate|happy|angry|sad");
-    Pattern properPattern = Pattern.compile("^[a-zA-Z0-9 ]+$");
-
     private List<String> keywords = Arrays.asList(
 //Domestic Security
 "assassination", "attack", "domestic security", "drill", "exercise", "cops",
