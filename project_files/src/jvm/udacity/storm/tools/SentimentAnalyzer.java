@@ -18,7 +18,14 @@ public class SentimentAnalyzer {
         props.setProperty("annotators", "tokenize,ssplit,parse,sentiment");
         pipeline = new StanfordCoreNLP(props);
     }
- 
+
+    public static int getBinarySentiment(int sentiment){
+        if(sentiment<=2)
+            return 0;
+        else
+            return 1;
+    }
+
     public static int findSentiment(String tweet) {
  
         int mainSentiment = 0;
@@ -28,16 +35,15 @@ public class SentimentAnalyzer {
             for (CoreMap sentence : annotation
                     .get(CoreAnnotations.SentencesAnnotation.class)) {
                 Tree tree = sentence
-                        .get(SentimentCoreAnnotations.AnnotatedTree.class);
+                            .get(SentimentCoreAnnotations.AnnotatedTree.class);
                 int sentiment = RNNCoreAnnotations.getPredictedClass(tree);
                 String partText = sentence.toString();
-                if (partText.length() > longest) {
+                if(partText.length() > longest){
                     mainSentiment = sentiment;
                     longest = partText.length();
                 }
- 
             }
         }
-        return mainSentiment;
+        return getBinarySentiment(mainSentiment);
     }
 }
