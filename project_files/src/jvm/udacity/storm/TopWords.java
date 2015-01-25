@@ -34,67 +34,36 @@ import udacity.storm.tools.SentimentAnalyzer;
 public class TopWords extends BaseRichBolt
 {
     private OutputCollector collector;
-    private Map<String, Integer> countNouns;
-    private Map<String, Integer> countVerbs;
-    private Map<String, Integer> countDO;
     private Map<String, Integer> SentimentDistribution;
-    Integer val;
     double alpha;
 
     @Override
     public void prepare(
-        Map              map,
-        TopologyContext  topologyContext,
-        OutputCollector  outputCollector)
-    {
+        Map                 map,
+        TopologyContext     topologyContext,
+        OutputCollector     outputCollector){
         collector = outputCollector;
         SentimentDistribution = new HashMap<String, Integer>();
         alpha = 0.2;
     }
 
-    public double getAvg(String county)
-    {
-        double sum = 0;
-        double total_count = 0.001;
-        for(int i=-1; i< 2; i++){
-            if(SentimentDistribution.containsKey(county + " "
-                                                 + String.valueOf(i))){
-                sum += SentimentDistribution.get(county + " "
-                                                 + String.valueOf(i))
-                       *(i+1.0)/3.0;
-                total_count += SentimentDistribution.get(county + " "
-                                                         + String.valueOf(i));
-            }
-        }
-        return sum/total_count;
-    }
-
-    public void execute(Tuple tuple)
-    {
+    public void execute(Tuple tuple){
         String tweet = tuple.getStringByField("original-tweet");
         String county = (String) tuple.getStringByField("county_id");
         String url = tuple.getStringByField("url");
         int sentiment = tuple.getIntegerByField("sentiment");
-        System.out.println("\n\n\nBEFORE: " + sentiment + "\n\n\n");
         String sentimentKey = county + " " + String.valueOf(sentiment);
-        double reportSentiment = 0.5;
-
-        if(SentimentDistribution.get(sentimentKey) == null){
+        if (SentimentDistribution.get(sentimentKey) == null){
             SentimentDistribution.put(sentimentKey,0);
         }
-
-        SentimentDistribution.put(sentimentKey,
-                                  SentimentDistribution.get(sentimentKey) + 1);
-
-        reportSentiment = Math.max(Math.min(1.0, getAvg(county)*3), 0.0);
-        System.out.println("\n\n\nAFTER: " + reportSentiment + "\n\n\n");
-
-        collector.emit(new Values(tweet, county, url, reportSentiment));
+        SentimentDistribution.put(sentimentKey, SentimentDistribution.get(sentimentKey) + 1);
+        collector.emit(new Values(tweet, county, url, sentiment));
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer)
     {
-        outputFieldsDeclarer.declare(new Fields("tweet", "county_id", "url", "sentiment"));
+        outputFieldsDeclarer.declare(new Fields("tweet", "county_id", "url",
+                                                "sentiment"));
     }
 }
