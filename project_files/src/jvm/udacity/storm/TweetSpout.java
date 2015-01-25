@@ -265,7 +265,7 @@ public class TweetSpout extends BaseRichSpout
             for(String key: keywords){
                 if(originalTweet.toLowerCase().contains(key)){
                     System.out.println("\n|| WORD FLAGGED: " + key + " ||");
-                    int sentiment = SentimentAnalyzer.findSentiment(originalTweet)-2;
+                    int sentiment = SentimentAnalyzer.findSentiment(originalTweet);
                     System.out.println("|| ORIGINAL TWEET: " + originalTweet + " ||");
                     System.out.println("|| TWEET SENTIMENT SCORE: " + String.valueOf(sentiment) + " ||\n");
                     collector.emit(new Values(ret, sentiment));
