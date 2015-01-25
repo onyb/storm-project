@@ -47,48 +47,8 @@ public class ReportBolt extends BaseRichBolt
     {
         // instantiate a redis connection
         RedisClient client = new RedisClient("localhost",6379);
-        URLCounter = new HashMap<String, Integer>();
-        sentimentURL = new HashMap<String, Double>();
         // initiate the actual connection
         redis = client.connect();
-    }
-
-    public Integer getURLCount(String url_)
-    {
-        if(URLCounter.containsKey(url_)){
-            return URLCounter.get(url_);
-        }
-        else{
-            return 1;
-        }
-    }
-
-    public String getMostFrequentURL()
-    {
-        ValueComparator bvc =  new ValueComparator(URLCounter);
-        TreeMap<String,Double> sorted_map = new TreeMap<String,Double>(bvc);
-        String result = "";
-        int MAX = 20;
-        int counter = 0;
-        for (String key : sorted_map.keySet()){
-            result = result + (key + "," + sorted_map.get(key));
-            counter++;
-            if(counter > 20)
-                break;
-        }
-
-        return result;
-        //return "no tweet";
-    }
-
-    public void observeURL(String url_)
-    {
-        if(URLCounter.containsKey(url_)){
-            URLCounter.put(url_, URLCounter.get(url_) + 1);
-        }
-        else{
-            URLCounter.put(url_,  1);
-        }
     }
 
     @Override
@@ -96,13 +56,10 @@ public class ReportBolt extends BaseRichBolt
     {
         String tweet = tuple.getStringByField("tweet");
         String county_id = tuple.getStringByField("county_id");
-        String url = tuple.getStringByField("url");
         int sentiment = tuple.getIntegerByField("sentiment");
-        System.out.println("\t\t\tDEBUG ReportBolt: " + "Tweet Sentiment:" + String.valueOf(sentiment) + "URL: " + getMostFrequentURL());
-        double alpha = 0.01;
-        double URLSentiment = sentiment;
+        System.out.println("\t\t\tDEBUG ReportBolt: " + "Tweet Sentiment:" + String.valueOf(sentiment));
     
-        redis.publish("WordCountTopology", county_id + "DELIMITER" + tweet + "DELIMITER" + String.valueOf(sentiment) + "DELIMITER" + getMostFrequentURL());
+        redis.publish("WordCountTopology", county_id + "DELIMITER" + tweet + "DELIMITER" + String.valueOf(sentiment) + "DELIMITER");
     }
 
     public void declareOutputFields(OutputFieldsDeclarer declarer)

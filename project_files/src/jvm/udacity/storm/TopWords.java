@@ -50,20 +50,19 @@ public class TopWords extends BaseRichBolt
     public void execute(Tuple tuple){
         String tweet = tuple.getStringByField("original-tweet");
         String county = (String) tuple.getStringByField("county_id");
-        String url = tuple.getStringByField("url");
         int sentiment = tuple.getIntegerByField("sentiment");
         String sentimentKey = county + " " + String.valueOf(sentiment);
         if (SentimentDistribution.get(sentimentKey) == null){
             SentimentDistribution.put(sentimentKey,0);
         }
         SentimentDistribution.put(sentimentKey, SentimentDistribution.get(sentimentKey) + 1);
-        collector.emit(new Values(tweet, county, url, sentiment));
+        collector.emit(new Values(tweet, county, sentiment));
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer)
     {
-        outputFieldsDeclarer.declare(new Fields("tweet", "county_id", "url",
+        outputFieldsDeclarer.declare(new Fields("tweet", "county_id",
                                                 "sentiment"));
     }
 }
