@@ -6,7 +6,6 @@ import backtype.storm.StormSubmitter;
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.OutputCollector;
 import backtype.storm.task.TopologyContext;
-import backtype.storm.testing.TestWordSpout;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.topology.base.BaseRichSpout;
@@ -16,9 +15,7 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
 
 import com.lambdaworks.redis.RedisClient;
 import com.lambdaworks.redis.RedisConnection;
@@ -35,9 +32,6 @@ public class ReportBolt extends BaseRichBolt
 {
     // place holder to keep the connection to redis
     transient RedisConnection<String,String> redis;
-    HashMap<String, Integer> URLCounter;
-    HashMap<String, Double> sentimentURL;
-    Rankings rankableList;
 
     @Override
     public void prepare(
@@ -57,8 +51,6 @@ public class ReportBolt extends BaseRichBolt
         String tweet = tuple.getStringByField("tweet");
         String county_id = tuple.getStringByField("county_id");
         int sentiment = tuple.getIntegerByField("sentiment");
-        System.out.println("\t\t\tDEBUG ReportBolt: " + "Tweet Sentiment:" + String.valueOf(sentiment));
-    
         redis.publish("WordCountTopology", county_id + "DELIMITER" + tweet + "DELIMITER" + String.valueOf(sentiment) + "DELIMITER");
     }
 
