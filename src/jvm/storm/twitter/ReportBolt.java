@@ -1,4 +1,4 @@
-package udacity.storm;
+package storm.twitter;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -20,7 +20,7 @@ import java.util.Map;
 import com.lambdaworks.redis.RedisClient;
 import com.lambdaworks.redis.RedisConnection;
 
-import udacity.storm.tools.*;
+import storm.twitter.tools.*;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;

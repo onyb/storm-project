@@ -1,4 +1,4 @@
-package udacity.storm.tools;
+package storm.twitter.tools;
 
 import java.io.Serializable;
 import java.util.HashMap;

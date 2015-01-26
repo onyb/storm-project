@@ -1,4 +1,4 @@
-package udacity.storm;
+package storm.twitter;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -23,7 +23,7 @@ import twitter4j.StatusDeletionNotice;
 import twitter4j.StatusListener;
 import twitter4j.StallWarning;
 import twitter4j.URLEntity;
-import udacity.storm.tools.SentimentAnalyzer;
+import storm.twitter.tools.SentimentAnalyzer;
 
 import java.util.Map;
 import java.util.concurrent.LinkedBlockingQueue;

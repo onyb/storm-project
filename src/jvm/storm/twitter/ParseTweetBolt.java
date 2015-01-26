@@ -1,4 +1,4 @@
-package udacity.storm;
+package storm.twitter;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -16,7 +16,7 @@ import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
 import java.util.Map;
-import udacity.storm.tools.CountiesLookup;
+import storm.twitter.tools.CountiesLookup;
 
 /**
  * A bolt that parses the tweet into words

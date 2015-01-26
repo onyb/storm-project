@@ -1,4 +1,4 @@
-package udacity.storm;
+package storm.twitter;
 
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -24,10 +24,10 @@ class TopNTweetTopology
          */
 
         TweetSpout tweetSpout = new TweetSpout(
-            "", /* Consumer Key (API Key) */
-            "", /* Consumer Secret (API Secret) */
-            "", /* Access Token */
-            ""  /* Access Token Secret */
+            "wHNfTXpDrAab07wIjRKCg0ot9", /* Consumer Key (API Key) */
+            "sISAIYQpL4kLZIPIAjxLak8eaexxltAd9Qv9hvQMoksQIKWS0b", /* Consumer Secret (API Secret) */
+            "2891034392-HRp7uzNnb752oDKfYcqtlmnBRDoiqjj3MHi2m4U", /* Access Token */
+            "h1xGHT5MeKFmds3zsAiQ7NDiGOiYh9T2Gi3e3zNBzaz7v"  /* Access Token Secret */
         );
 
         /* Connect Tweet Spout to the topology with parallelism of 1 */
