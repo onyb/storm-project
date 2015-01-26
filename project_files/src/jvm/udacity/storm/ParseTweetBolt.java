@@ -25,7 +25,6 @@ import udacity.storm.tools.CountiesLookup;
 public class ParseTweetBolt extends BaseRichBolt
 {
     OutputCollector collector;
-    StringBuilder result;
     CountiesLookup clookup;
 
     @Override
@@ -36,7 +35,6 @@ public class ParseTweetBolt extends BaseRichBolt
     {
         collector = outputCollector;
         clookup= new CountiesLookup();
-        result = new StringBuilder();
     }
 
     @Override
