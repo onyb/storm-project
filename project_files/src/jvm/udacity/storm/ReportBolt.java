@@ -48,10 +48,10 @@ public class ReportBolt extends BaseRichBolt
     @Override
     public void execute(Tuple tuple)
     {
-        String tweet = tuple.getStringByField("tweet");
+        String originalTweet = tuple.getStringByField("tweet");
         String county_id = tuple.getStringByField("county_id");
         int sentiment = tuple.getIntegerByField("sentiment");
-        redis.publish("WordCountTopology", county_id + "DELIMITER" + tweet + "DELIMITER" + String.valueOf(sentiment) + "DELIMITER");
+        redis.publish("WordCountTopology", county_id + "DELIMITER" + originalTweet + "DELIMITER" + String.valueOf(sentiment) + "DELIMITER");
     }
 
     public void declareOutputFields(OutputFieldsDeclarer declarer)

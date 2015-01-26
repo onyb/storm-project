@@ -40,7 +40,7 @@ public class ParseTweetBolt extends BaseRichBolt
     @Override
     public void execute(Tuple tuple)
     {
-        String tweet = tuple.getStringByField("tweet").split("DELIMITER")[0];
+        String originalTweet = tuple.getStringByField("tweet").split("DELIMITER")[0];
 
         double latitude = Double.parseDouble(tuple.getStringByField("tweet")
                                                   .split("DELIMITER")[1]
@@ -54,7 +54,7 @@ public class ParseTweetBolt extends BaseRichBolt
 
         int sentiment = tuple.getIntegerByField("sentiment");
 
-        collector.emit(new Values(tweet, county_id, sentiment));
+        collector.emit(new Values(originalTweet, county_id, sentiment));
     }
 
     @Override
@@ -62,6 +62,6 @@ public class ParseTweetBolt extends BaseRichBolt
     {
         /* Tell Storm the schema of the output tuple for this spout
            tuple consists of a single column called 'tweet' */
-        declarer.declare(new Fields("original-tweet", "county_id", "sentiment"));
+        declarer.declare(new Fields("tweet", "county_id", "sentiment"));
     }
 }
