@@ -7,7 +7,7 @@ import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
 import backtype.storm.utils.Utils;
 
-class TopNTweetTopology
+class StormTopology
 {
     public static void main(String[] args) throws Exception
     {
